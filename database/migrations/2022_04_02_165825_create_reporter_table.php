@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reports',function (Blueprint $table){
-            $table->id()->primary();
-            $table->string('name')->nullable(false);
-            $table->string('email');
-            $table->longText('message');
-            $table->string('filename');
+            $table->id();
+            $table->string('name',200);
+            $table->string('email',100);
+            $table->longText('message')->nullable();
+            $table->string('filename')->nullable();
             $table->timestamps();
         });
     }
