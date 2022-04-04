@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReportRequest;
+use App\Mail\ReportMail;
 use App\Models\Report;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class ReportController extends Controller
 {
@@ -42,9 +39,10 @@ class ReportController extends Controller
             'message' => $validatedRequest['message'],
             'filename' => $filepath
         ]);
-
         $report->save();
 
-        return back()->with('status','Report has been saved and our support will contact you in following 24h');
+        Mail::send(new ReportMail($report));
+
+        return back()->with('status', 'Report has been saved and our support will contact you in following 24h');
     }
 }
