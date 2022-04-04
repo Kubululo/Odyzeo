@@ -26,8 +26,8 @@ class ReportRequest extends FormRequest
         return [
             'name' => 'string|required|max:200',
             'email' => 'required|max:100|email:rfc,dns',
-            'photo' => 'max:2048|mimes:jpeg,jpg,png|sometimes|nullable|required_without:message',
-            'message' => 'max:2000|required_without:photo'
+            'image' => 'image|max:2048|mimes:jpeg,jpg,png|sometimes|nullable|required_without:message',
+            'message' => 'max:2000|required_without:image'
         ];
     }
 }

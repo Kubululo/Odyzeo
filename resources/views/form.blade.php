@@ -21,6 +21,7 @@
             font-family: 'Nunito', sans-serif;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body class="antialiased">
 <div
@@ -41,15 +42,15 @@
         </div>
     @endif
 
-    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="/report">
+    <form class="form-horizontal mx-auto w-50" method="POST" enctype="multipart/form-data" action="/report">
         @csrf
         <fieldset>
             <!-- Form Name -->
             <legend>Report problem</legend>
             <!-- Text input-->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="name">Name</label>
-                <div class="col-md-4">
+                <label class="col-auto control-label" for="name">Name</label>
+                <div class="col-auto">
                     <input id="name" name="name" type="text" placeholder="Enter your name"
                            class="form-control input-md" required="">
                 </div>
@@ -57,8 +58,8 @@
 
             <!-- Text input-->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="email">Email</label>
-                <div class="col-md-4">
+                <label class="col-auto control-label" for="email">Email</label>
+                <div class="col-auto">
                     <input id="email" name="email" type="email" placeholder="Enter your email address"
                            class="form-control input-md" required="">
                 </div>
@@ -66,28 +67,49 @@
 
             <!-- Textarea -->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="message">Message</label>
-                <div class="col-md-4">
+                <label class="col-auto control-label" for="message">Message</label>
+                <div class="col-auto">
                         <textarea class="form-control" id="message"
-                                  name="message"></textarea>
+                                  name="message" placeholder="Briefly describe your issue (max 2000 chars)" maxlength="2000"></textarea>
                 </div>
+                <span id="chars">2000</span> characters remaining
             </div>
 
             <!-- File Button -->
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="col-auto control-label" for="image">Upload image</label>
+                        <div class="col-auto">
+                            <input id="image" name="image" class="input-file" type="file" accept="image/jpeg, image/png">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group mt-3">
+                        <button class="btn btn-primary float-end" type="submit">Submit</button>
+                    </div>
+                </div>
 
-            <label class="col-md-4 control-label" for="image">Upload image</label>
-            <div class="col-md-4">
-                <input id="photo" name="photo" class="input-file" type="file" accept="image/jpeg, image/png">
             </div>
 
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit">Submit</button>
-            </div>
+
         </fieldset>
     </form>
 </div>
-</body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
         crossorigin="anonymous"></script>
+
+<script>
+    let textArea = $('#message');
+    let maxLength = textArea.attr('maxlength');
+    $('#chars').text(maxLength);
+    textArea.keyup(function() {
+        let length = $(this).val().length;
+        length = maxLength-length;
+        $('#chars').text(length);
+    });
+</script>
+</body>
 </html>
