@@ -58,7 +58,7 @@ class ReportMail extends Mailable
      */
     public function build(): ReportMail
     {
-        return $this->markdown('emails.report')
+        $email = $this->markdown('emails.report')
             ->from($this->email, $this->name)
             ->to(env('MAIL_TO_ADDRESS'))
             ->subject('Report ' . $this->caseId)
@@ -67,10 +67,14 @@ class ReportMail extends Mailable
                 'name' => $this->name,
                 'email' => $this->email,
                 'message' => $this->message ?: 'Not provided'
-            ])
-            ->attach(Storage::path($this->filename), [
+            ]);
+        if($this->filename){
+            $email->attach(Storage::path($this->filename), [
                 'as' => 'error.jpg',
                 'mime' => 'image/jpeg',
             ]);
+        }
+        return $email;
+
     }
 }
