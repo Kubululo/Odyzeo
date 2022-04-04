@@ -18,7 +18,7 @@ class ReportController extends Controller
      */
     public function create(): View
     {
-        return view('welcome');
+        return view('form');
     }
 
     /**
@@ -30,19 +30,9 @@ class ReportController extends Controller
     public function store(ReportRequest $request): RedirectResponse
     {
         $validatedRequest = $request->validated();
-
-        $filepath = empty($validatedRequest['photo']) ? null : $validatedRequest['photo']->store('uploads');
-
-        $report = new Report([
-            'name' => $validatedRequest['name'],
-            'email' => $validatedRequest['email'],
-            'message' => $validatedRequest['message'],
-            'filename' => $filepath
-        ]);
-        $report->save();
-
+        $validatedRequest['filename'] = empty($validatedRequest['image']) ? null : $validatedRequest['image']->store('uploads');
+        $report = Report::create($validatedRequest);
         Mail::send(new ReportMail($report));
-
         return back()->with('status', 'Report has been saved and our support will contact you in following 24h');
     }
 }
