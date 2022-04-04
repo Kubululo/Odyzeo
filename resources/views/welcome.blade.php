@@ -69,7 +69,7 @@
                 <label class="col-md-4 control-label" for="message">Message</label>
                 <div class="col-md-4">
                         <textarea class="form-control" id="message"
-                                  name="message">Hi I have a following problem:</textarea>
+                                  name="message"></textarea>
                 </div>
             </div>
 
