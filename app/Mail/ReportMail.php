@@ -71,7 +71,7 @@ class ReportMail extends Mailable
         if($this->filename){
             $email->attach(Storage::path($this->filename), [
                 'as' => env('MAIL_ATTACHMENT_NAME'),
-                'mime' => 'image/jpeg',
+                'mime' => env('MAIL_ATTACHMENT_TYPE'),
             ]);
         }
         return $email;
