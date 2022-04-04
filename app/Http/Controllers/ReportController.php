@@ -7,10 +7,25 @@ use App\Mail\ReportMail;
 use App\Models\Report;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class ReportController extends Controller
 {
+
+    /**
+     * Show all records
+     *
+     * @return View
+     */
+    public function index(): View
+    {
+        return view('welcome')->with(
+            'records',
+            DB::table('reports')->simplePaginate(10)
+        );
+    }
+
     /**
      * Show the form for creating a new resource.
      *

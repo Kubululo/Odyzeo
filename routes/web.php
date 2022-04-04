@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ReportController::class, 'create']);
-Route::post('/report',[ReportController::class,'store']);
+Route::get('/', [ReportController::class, 'index']);
+Route::get('/form', [ReportController::class, 'create']);
+Route::post('/report', [ReportController::class, 'store']);
