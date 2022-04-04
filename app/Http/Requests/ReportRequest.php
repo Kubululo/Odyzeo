@@ -25,10 +25,10 @@ class ReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:200',
+            'name' => 'string|required|max:200',
             'email' => 'required|max:100|email:rfc,dns',
-            'photo' => 'max:2048|mimes:jpeg,jpg,png|sometimes|nullable',
-            'message' => 'max:2000'
+            'photo' => 'max:2048|mimes:jpeg,jpg,png|sometimes|nullable|required_without:message',
+            'message' => 'max:2000|required_without:photo'
         ];
     }
 }
