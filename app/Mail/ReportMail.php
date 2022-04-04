@@ -12,14 +12,29 @@ class ReportMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * @var string
+     */
     private string $name;
 
+    /**
+     * @var string
+     */
     private string $email;
 
+    /**
+     * @var string|null
+     */
     private ?string $message;
 
+    /**
+     * @var int
+     */
     private int $caseId;
 
+    /**
+     * @var string|null
+     */
     private ?string $filename;
 
     /**
@@ -44,15 +59,16 @@ class ReportMail extends Mailable
     public function build(): ReportMail
     {
         return $this->markdown('emails.report')
-            ->from($this->email,$this->name)
+            ->from($this->email, $this->name)
             ->to(env('MAIL_TO_ADDRESS'))
-            ->subject('Report '.$this->caseId)
+            ->subject('Report ' . $this->caseId)
             ->with([
                 'id' => $this->caseId,
                 'name' => $this->name,
                 'email' => $this->email,
-                'message' => $this->message
-            ])->attach(Storage::path($this->filename), [
+                'message' => $this->message ?: 'Not provided'
+            ])
+            ->attach(Storage::path($this->filename), [
                 'as' => 'error.jpg',
                 'mime' => 'image/jpeg',
             ]);
